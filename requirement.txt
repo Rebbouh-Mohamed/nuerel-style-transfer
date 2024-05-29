@@ -1,0 +1,10 @@
+opencv-python
+numpy 
+altair
+pandas 
+torch
+torchvision
+PIL
+io 
+base64
+matplotlib
