@@ -55,10 +55,10 @@ def prepare_img(img_path, target_shape, device):
     return img
 
 
-# def save_image(img, img_path):
-#     if len(img.shape) == 2:
-#         img = np.stack((img,) * 3, axis=-1)
-#     cv.imwrite(img_path, img[:, :, ::-1])  # [:, :, ::-1] converts rgb into bgr (opencv contraint...)
+def save_image(img, img_path):
+    if len(img.shape) == 2:
+        img = np.stack((img,) * 3, axis=-1)
+    cv.imwrite(img_path, img[:, :, ::-1])  # [:, :, ::-1] converts rgb into bgr (opencv contraint...)
 
 
 def generate_out_img_name(config):
@@ -71,23 +71,23 @@ def generate_out_img_name(config):
     return prefix + suffix
 
 
-# def save_and_maybe_display(optimizing_img, dump_path, config, img_id, num_of_iterations, should_display=False):
-#     saving_freq =1000
-#     out_img = optimizing_img.squeeze(axis=0).to('cpu').detach().numpy()
-#     out_img = np.moveaxis(out_img, 0, 2)  # swap channel from 1st to 3rd position: ch, _, _ -> _, _, chr
+def save_and_maybe_display(optimizing_img, dump_path, config, img_id, num_of_iterations, should_display=False):
+    saving_freq =1000
+    out_img = optimizing_img.squeeze(axis=0).to('cpu').detach().numpy()
+    out_img = np.moveaxis(out_img, 0, 2)  # swap channel from 1st to 3rd position: ch, _, _ -> _, _, chr
 
-#     # for saving_freq == -1 save only the final result (otherwise save with frequency saving_freq and save the last pic)
-#     if img_id == num_of_iterations-1 or (saving_freq > 0 and img_id % saving_freq == 0):
-#         img_format = config['img_format']
-#         out_img_name = str(img_id).zfill(img_format[0]) + img_format[1] if saving_freq != -1 else generate_out_img_name(config)
-#         dump_img = np.copy(out_img)
-#         dump_img += np.array(IMAGENET_MEAN_255).reshape((1, 1, 3))
-#         dump_img = np.clip(dump_img, 0, 255).astype('uint8')
-#         cv.imwrite(os.path.join(dump_path, out_img_name), dump_img[:, :, ::-1])
+    # for saving_freq == -1 save only the final result (otherwise save with frequency saving_freq and save the last pic)
+    if img_id == num_of_iterations-1 or (saving_freq > 0 and img_id % saving_freq == 0):
+        img_format = config['img_format']
+        out_img_name = str(img_id).zfill(img_format[0]) + img_format[1] if saving_freq != -1 else generate_out_img_name(config)
+        dump_img = np.copy(out_img)
+        dump_img += np.array(IMAGENET_MEAN_255).reshape((1, 1, 3))
+        dump_img = np.clip(dump_img, 0, 255).astype('uint8')
+        cv.imwrite(os.path.join(dump_path, out_img_name), dump_img[:, :, ::-1])
 
-#     if should_display:
-#         plt.imshow(np.uint8(get_uint8_range(out_img)))
-#         plt.show()
+    if should_display:
+        plt.imshow(np.uint8(get_uint8_range(out_img)))
+        plt.show()
 
 
 def get_uint8_range(x):
@@ -130,15 +130,15 @@ def gram_matrix(x, should_normalize=True):
         gram /= ch * h * w
     return gram
 
-# def numpy_array_to_image(array):
-#     # Convert BGR to RGB if needed
-#     if len(array.shape) == 3 and array.shape[2] == 3:
-#         array = cv.cvtColor(array, cv.COLOR_BGR2RGB)
+def numpy_array_to_image(array):
+    # Convert BGR to RGB if needed
+    if len(array.shape) == 3 and array.shape[2] == 3:
+        array = cv.cvtColor(array, cv.COLOR_BGR2RGB)
 
-#     # Create image from array
-#     image = cv.cvtColor(array, cv.COLOR_RGB2BGR) if len(array.shape) == 3 else array
+    # Create image from array
+    image = cv.cvtColor(array, cv.COLOR_RGB2BGR) if len(array.shape) == 3 else array
 
-#     return image
+    return image
 def numpy_array_to_image(array):
     """
     Convert a NumPy array to a PIL image.
@@ -175,15 +175,15 @@ def total_variation(y):
 
 
 
-# def create_video_from_images(image_folder, video_name, fps=30):
-#     images = [img for img in os.listdir(image_folder) if img.endswith(".jpg")]
-#     frame = cv.imread(os.path.join(image_folder, images[0]))
-#     height, width, layers = frame.shape
+def create_video_from_images(image_folder, video_name, fps=30):
+    images = [img for img in os.listdir(image_folder) if img.endswith(".jpg")]
+    frame = cv.imread(os.path.join(image_folder, images[0]))
+    height, width, layers = frame.shape
 
-#     video = cv.VideoWriter(video_name, cv.VideoWriter_fourcc(*'mp4v'), fps, (width,height))
+    video = cv.VideoWriter(video_name, cv.VideoWriter_fourcc(*'mp4v'), fps, (width,height))
 
-#     for image in images:
-#         video.write(cv.imread(os.path.join(image_folder, image)))
+    for image in images:
+        video.write(cv.imread(os.path.join(image_folder, image)))
 
-#     cv.destroyAllWindows()
-#     video.release()
+    cv.destroyAllWindows()
+    video.release()
