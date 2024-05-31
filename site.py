@@ -296,7 +296,7 @@ if start_btn:
         col1.image(uploaded_style_image, caption='Style Image', use_column_width=True , width=300)
         col2.image(uploaded_content_image, caption='Content Image', use_column_width=True , width=300)
              # Simulate processing with a progress bar
-        progress_bar = st.progress(100)
+        progress_bar = st.progress(0)
         result=transfe(uploaded_content_image,uploaded_style_image,progress_bar)
 
         
