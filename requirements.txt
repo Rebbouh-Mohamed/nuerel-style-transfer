@@ -1,11 +1,11 @@
-streamlit
+Streamlit
 opencv-python
 numpy 
 altair
 pandas 
 torch
 torchvision
-PIL
+pillow
 io 
 base64
 matplotlib
