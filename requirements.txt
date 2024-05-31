@@ -6,6 +6,4 @@ pandas
 torch
 torchvision
 pillow
-io 
-base64
 matplotlib
