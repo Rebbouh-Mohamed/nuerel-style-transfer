@@ -139,22 +139,6 @@ def numpy_array_to_image(array):
     image = cv.cvtColor(array, cv.COLOR_RGB2BGR) if len(array.shape) == 3 else array
 
     return image
-def numpy_array_to_image(array):
-    """
-    Convert a NumPy array to a PIL image.
-    
-    Parameters:
-    array (numpy.ndarray): Input NumPy array.
-    
-    Returns:
-    PIL.Image.Image: Converted PIL image.
-    """
-    # Convert BGR to RGB if needed (OpenCV uses BGR by default)
-    if len(array.shape) == 3 and array.shape[2] == 3:
-        array = array[..., ::-1]  # BGR to RGB
-
-    # Create image from array
-    image = Image.fromarray(array)
 
     
 def TO_img(optimizing_img):
